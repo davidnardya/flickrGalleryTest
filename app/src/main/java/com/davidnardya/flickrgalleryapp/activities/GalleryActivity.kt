@@ -10,26 +10,27 @@ import com.davidnardya.flickrgalleryapp.R
 import com.davidnardya.flickrgalleryapp.adapter.RecyclerViewAdapter
 import com.davidnardya.flickrgalleryapp.databinding.GalleryMainBinding
 import com.davidnardya.flickrgalleryapp.factory.GalleryViewModelFactory
-import com.davidnardya.flickrgalleryapp.model.FirstObject
-import com.davidnardya.flickrgalleryapp.repository.Repository
 import com.davidnardya.flickrgalleryapp.viewmodel.GalleryViewModel
 import kotlinx.android.synthetic.main.gallery_main.*
 import kotlinx.coroutines.flow.collectLatest
 
 class GalleryActivity : AppCompatActivity() {
 
+    //Properties
     private lateinit var viewModel: GalleryViewModel
     private lateinit var binding: GalleryMainBinding
     private lateinit var recyclerViewAdapter: RecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.gallery_main)
 
+        bindingPage()
         initRecyclerView()
+        getData()
+    }
 
-        val repository = Repository()
-        val viewModelFactory = GalleryViewModelFactory(repository)
+    private fun getData() {
+        val viewModelFactory = GalleryViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(GalleryViewModel::class.java)
 
         lifecycleScope.launchWhenCreated {
@@ -37,8 +38,10 @@ class GalleryActivity : AppCompatActivity() {
                 recyclerViewAdapter.submitData(it)
             }
         }
+    }
 
-
+    private fun bindingPage() {
+        binding = DataBindingUtil.setContentView(this, R.layout.gallery_main)
     }
 
     private fun initRecyclerView() {
