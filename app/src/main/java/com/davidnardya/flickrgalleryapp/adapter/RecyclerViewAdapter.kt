@@ -14,9 +14,9 @@ import com.davidnardya.flickrgalleryapp.R
 import com.davidnardya.flickrgalleryapp.activities.FullImageActivity
 import com.davidnardya.flickrgalleryapp.model.Image
 
-class RecyclerViewAdapter(context: Context) : PagingDataAdapter<Image, RecyclerViewAdapter.ViewHolder>(DiffUtilCallback()) {
-
-    val context = context
+class RecyclerViewAdapter(
+    private val context: Context
+) : PagingDataAdapter<Image, RecyclerViewAdapter.ViewHolder>(DiffUtilCallback()) {
 
     override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int) {
         getItem(position)?.let {
@@ -28,7 +28,7 @@ class RecyclerViewAdapter(context: Context) : PagingDataAdapter<Image, RecyclerV
             val url = "https://farm${farmId}.staticflickr.com/${serverId}/${imageId}_${secret}.jpg"
             holder.itemView.setOnClickListener {
 
-                var intent = Intent(context, FullImageActivity::class.java)
+                val intent = Intent(context, FullImageActivity::class.java)
                 intent.putExtra("imageUrl", url)
                 context.startActivity(intent)
 
@@ -44,7 +44,7 @@ class RecyclerViewAdapter(context: Context) : PagingDataAdapter<Image, RecyclerV
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
-        val imageView: ImageView = view.findViewById(R.id.row_image)
+        private val imageView: ImageView = view.findViewById(R.id.row_image)
 
         fun bind(image: Image) {
             Glide.with(imageView)

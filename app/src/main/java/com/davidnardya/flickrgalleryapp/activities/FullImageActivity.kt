@@ -10,10 +10,16 @@ import kotlinx.android.synthetic.main.activity_full_image.*
 
 class FullImageActivity : AppCompatActivity() {
 
+    //Properties
     private lateinit var binding: ActivityFullImageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initPage()
+    }
+
+    private fun initPage() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_full_image)
 
         val imageUrl = intent.getStringExtra("imageUrl")

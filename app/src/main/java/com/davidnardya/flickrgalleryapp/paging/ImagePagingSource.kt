@@ -16,10 +16,7 @@ class ImagePagingSource(val apiService: SimpleApi): PagingSource<Int, Image>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Image> {
         return try {
             val nextPage = (params.key ?: FIRST_PAGE_INDEX)
-            var response = apiService.getImages2(nextPage)
-
-            println("Next page")
-            println(response.photos.photo[0].id)
+            val response = apiService.getImages(nextPage)
 
             LoadResult.Page(
                 data = response.photos.photo,
