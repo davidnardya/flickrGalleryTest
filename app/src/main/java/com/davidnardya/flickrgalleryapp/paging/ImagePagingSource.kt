@@ -18,6 +18,9 @@ class ImagePagingSource(val apiService: SimpleApi): PagingSource<Int, Image>() {
             val nextPage = (params.key ?: FIRST_PAGE_INDEX)
             var response = apiService.getImages2(nextPage)
 
+            println("Next page")
+            println(response.photos.photo[0].id)
+
             LoadResult.Page(
                 data = response.photos.photo,
                 prevKey = null,
